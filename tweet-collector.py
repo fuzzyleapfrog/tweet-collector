@@ -2,16 +2,25 @@
 
 import mysql.connector as mariadb
 
+def get_user(cursor,key,value):
+    print key, value
+    query = "SELECT id, name, twitternick FROM people WHERE {} = '{}'".format(key, value)
+    cursor.execute(query)
+    return cursor
+
 mariadb_connection = mariadb.connect(user='fuzzy', password='leapfrog', database='fuzzy')
 
 cursor = mariadb_connection.cursor()
 
+# define already existing users
+twitternick = 'HeptaSean'
+
 # get one user by twitternick
-cursor.execute("SELECT name,twitternick FROM people WHERE twitternick = %s", ('HeptaSean',))
+cursor = get_user(cursor,'twitternick',twitternick)
 # print
 print 'get one user by twitternick'
-for name, twitternick in cursor:
-    print("Name: {}, Twitternick: {}").format(name,twitternick)
+for id, name, twitternick in cursor:
+    print("ID: {}, Name: {}, Twitternick: {}").format(id,name,twitternick)
 
 # get all users
 cursor.execute("SELECT name,twitternick FROM people")
