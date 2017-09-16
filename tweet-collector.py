@@ -31,10 +31,10 @@ def delete_user(cursor,key,value):
 
 def main():
 
+    # connect to database
     mariadb_connection = mariadb.connect(user='fuzzy', password='leapfrog', database='fuzzy')
-
     cursor = mariadb_connection.cursor()
-
+    
     # define already existing users
     twitternick = 'HeptaSean'
     id = 4
