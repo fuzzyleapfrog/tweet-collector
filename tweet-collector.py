@@ -29,44 +29,47 @@ def delete_user(cursor,key,value):
     print_user(cursor)
     return cursor
 
-mariadb_connection = mariadb.connect(user='fuzzy', password='leapfrog', database='fuzzy')
+def main():
 
-cursor = mariadb_connection.cursor()
+    mariadb_connection = mariadb.connect(user='fuzzy', password='leapfrog', database='fuzzy')
 
-# define already existing users
-twitternick = 'HeptaSean'
-id = 4
+    cursor = mariadb_connection.cursor()
 
-# get one user by twitternick
-print 'get one user by twitternick'
-cursor = get_user(cursor,'twitternick',twitternick)
-# get one user by id
-print 'get one user by id'
-cursor = get_user(cursor,'id',id)
+    # define already existing users
+    twitternick = 'HeptaSean'
+    id = 4
 
-# get all users
-print 'get all users'
-cursor = get_all_users(cursor)
+    # get one user by twitternick
+    print 'get one user by twitternick'
+    cursor = get_user(cursor,'twitternick',twitternick)
+    # get one user by id
+    print 'get one user by id'
+    cursor = get_user(cursor,'id',id)
 
-# define test user
-twitternick = 'testnick'
+    # get all users
+    print 'get all users'
+    cursor = get_all_users(cursor)
 
-# insert user into table people
-print 'insert user %s' % twitternick
-insert_user(cursor,'twitternick',twitternick)
+    # define test user
+    twitternick = 'testnick'
 
-# get all users
-print 'get all users'
-cursor = get_all_users(cursor)
+    # insert user into table people
+    print 'insert user %s' % twitternick
+    insert_user(cursor,'twitternick',twitternick)
 
-# delete user from table people
-print 'delete user %s' % twitternick
-delete_user(cursor,'twitternick',twitternick)
+    # get all users
+    print 'get all users'
+    cursor = get_all_users(cursor)
 
-# get all users
-print 'get all users'
-cursor = get_all_users(cursor)
+    # delete user from table people
+    print 'delete user %s' % twitternick
+    delete_user(cursor,'twitternick',twitternick)
 
+    # get all users
+    print 'get all users'
+    cursor = get_all_users(cursor)
 
+if __name__ == "__main__":
+    main()
 
 
