@@ -3,24 +3,22 @@
 import mysql.connector as mariadb
 
 def print_user(cursor):
-    for id, name, twitternick in cursor:
-        print("ID: {}, Name: {}, Twitternick: {}").format(id,name,twitternick)    
+    for name, twitternick in cursor:
+        print("ID: {}, Twitternick: {}").format(name,twitternick)    
 
 def get_user(cursor,key,value):
-    query = "SELECT id, name, twitternick FROM people WHERE {} = '{}'".format(key,value)
-    # alternative query construction
-    # query = "SELECT id, name, twitternick FROM people WHERE %s = '%s'" % (key, value)
+    query = "SELECT id, twitternick FROM people WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
     print_user(cursor)
     return cursor
 
 def get_all_users(cursor):
-    cursor.execute("SELECT id, name, twitternick FROM people")
+    cursor.execute("SELECT id, twitternick FROM people")
     print_user(cursor)
     return cursor
 
-def insert_user(cursor,name,twitternick):
-    query = "INSERT INTO people (id, name, twitternick) VALUES (NULL, '{}', '{}')".format(name,twitternick)
+def insert_user(cursor,key,value):
+    query = "INSERT INTO people (id, {}) VALUES (NULL, '{}')".format(key,value)
     cursor.execute(query)
     print_user(cursor)
     return cursor
@@ -37,32 +35,33 @@ cursor = mariadb_connection.cursor()
 
 # define already existing users
 twitternick = 'HeptaSean'
-name = 'Suzan'
+id = 4
 
 # get one user by twitternick
 print 'get one user by twitternick'
 cursor = get_user(cursor,'twitternick',twitternick)
-# get one user by name
-print 'get one user by name'
-cursor = get_user(cursor,'name',name)
+# get one user by id
+print 'get one user by id'
+cursor = get_user(cursor,'id',id)
 
 # get all users
 print 'get all users'
 cursor = get_all_users(cursor)
 
 # define test user
-json_user = {'name': 'test',
-             'twitternick': 'testnick'}
+twitternick = 'testnick'
 
 # insert user into table people
-insert_user(cursor,json_user['name'],json_user['twitternick'])
+print 'insert user %s' % twitternick
+insert_user(cursor,'twitternick',twitternick)
 
 # get all users
 print 'get all users'
 cursor = get_all_users(cursor)
 
 # delete user from table people
-delete_user(cursor,'name',json_user['name'])
+print 'delete user %s' % twitternick
+delete_user(cursor,'twitternick',twitternick)
 
 # get all users
 print 'get all users'
