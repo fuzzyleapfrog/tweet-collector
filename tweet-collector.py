@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import ConfigParser
 import mysql.connector as mariadb
 
 def print_user(cursor):
@@ -31,8 +32,14 @@ def delete_user(cursor,key,value):
 
 def main():
 
+    # get config
+    config = ConfigParser.ConfigParser()
+    config.readfp(open('config.cfg'))
+
     # connect to database
-    mariadb_connection = mariadb.connect(user='fuzzy', password='leapfrog', database='fuzzy')
+    mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
+                                         password=config.get('Database','PW'),
+                                         database=config.get('Database','NAME'))
     cursor = mariadb_connection.cursor()
     
     # define already existing users
