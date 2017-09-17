@@ -1,5 +1,5 @@
 # The Tweet Collector
-A small web tool to collect selective tweets of selected user.
+Tweet collector allows you to collect specific tweets of specific users.
 
 # Create your own Tweet Collector
 You first have to create your own `tweet-collector.cfg` based on the example config to get the script running. Move your `tweet-collector.cfg` to `/etc`. 
