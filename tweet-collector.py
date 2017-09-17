@@ -2,62 +2,69 @@
 
 import ConfigParser
 import mysql.connector as mariadb
+from wsgiref.simple_server import make_server
+
+def application (environ,start_response):
+    response_body = test_mode()
+    status = '200 OK'
+    response_headers = [
+        ('Content-Type', 'text/plain'),
+        ('Content-Length', str(len(response_body)))
+    ]
+    start_response(status, response_headers)
+    return [response_body]
 
 def print_user(cursor):
+    string = ''
     for id, twitternick in cursor:
-        print("ID: {}, Twitternick: {}").format(id,twitternick)    
+        string += "ID: {}, Twitternick: {}".format(id,twitternick)+'\n'
+    return string
 
 def get_user(cursor,key,value):
     query = "SELECT id, twitternick FROM people WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
-    print_user(cursor)
     return cursor
 
 def get_all_users(cursor):
     cursor.execute("SELECT id, twitternick FROM people")
-    print_user(cursor)
     return cursor
 
 def insert_user(cursor,twitternick):
     query = "INSERT INTO people (id, twitternick) VALUES (NULL, '{}')".format(twitternick)
     cursor.execute(query)
-    print_user(cursor)
     return cursor
 
 def delete_user(cursor,key,value):
     query = "DELETE FROM people WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
-    print_user(cursor)
     return cursor
 
 def print_tweet(cursor):
+    string = ''
     for id, tweet_id, people_id in cursor:
-        print("ID: {}, Tweet-ID: {}, User-ID: {}").format(id,tweet_id,people_id)    
+        string += "ID: {}, Tweet-ID: {}, User-ID: {}".format(id,tweet_id,people_id)+'\n'
+    return string
 
 def get_tweet(cursor,key,value):
     query = "SELECT id, tweet_id, people_id FROM tweets WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
-    print_tweet(cursor)
     return cursor
     
 def get_all_tweets(cursor):
     cursor.execute("SELECT id, tweet_id, people_id FROM tweets")
-    print_tweet(cursor)
     return cursor
 
 def insert_tweet(cursor,tweet_id,people_id):
     query = "INSERT INTO tweets (id, tweet_id, people_id) VALUES (NULL, '{}', {})".format(tweet_id,people_id)
     cursor.execute(query)
-    print_user(cursor)
     return cursor
 
 def delete_tweets(cursor,key,value):
     query = "DELETE FROM tweets WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
-    print_user(cursor)
     return cursor
 
-def main():
+def test_mode():
 
     # get config
     config = ConfigParser.ConfigParser()
@@ -69,6 +76,8 @@ def main():
                                          database=config.get('Database','NAME'))
     cursor = mariadb_connection.cursor()
 
+    string = ''
+
     # ---- PEOPLE ----
     
     # define already existing users
@@ -76,34 +85,39 @@ def main():
     id = 4
 
     # get one user by twitternick
-    print 'get one user by twitternick'
+    string += 'get one user by twitternick'+'\n'
     cursor = get_user(cursor,'twitternick',twitternick)
+    string += print_user(cursor)
     # get one user by id
-    print 'get one user by id'
+    string += 'get one user by id'+'\n'
     cursor = get_user(cursor,'id',id)
+    string += print_user(cursor)
 
     # get all users
-    print 'get all users'
+    string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
+    string += print_user(cursor)
 
     # define test user
     twitternick = 'testnick'
 
     # insert user into table people
-    print 'insert user with twitternick %s in table people' % twitternick
+    string += 'insert user with twitternick %s in table people\n' % twitternick
     insert_user(cursor,twitternick)
 
     # get all users
-    print 'get all users'
+    string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
+    string += print_user(cursor)
 
     # delete user from table people
-    print 'delete user %s' % twitternick
+    string += 'delete user %s\n' % twitternick
     delete_user(cursor,'twitternick',twitternick)
 
     # get all users
-    print 'get all users'
+    string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
+    string += print_user(cursor)
 
     # --- TWEETS ---
 
@@ -113,45 +127,51 @@ def main():
     people_id = 1
 
     # get one tweet by tweet id
-    print 'get one tweet by tweet id'
+    string += 'get one tweet by tweet id'+'\n'
     cursor = get_tweet(cursor,'tweet_id',tweet_id)
+    string += print_tweet(cursor)
     # get one tweet by id
-    print 'get one tweet by id'
+    string += 'get one tweet by id'+'\n'
     cursor = get_tweet(cursor,'id',id)
+    string += print_tweet(cursor)
     # get tweets by user id
-    print 'get one tweet by user id'
+    string += 'get one tweet by user id'+'\n'
     cursor = get_tweet(cursor,'people_id',people_id)
+    string += print_tweet(cursor)
 
     # get all tweets
-    print 'get all tweets'
+    string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
 
     # define test tweet
     tweet_id = '908758168733405184'
     people_id = 4
 
     # insert tweet into table tweets
-    print 'insert tweet %s of user with id %d in table tweets' % (tweet_id, people_id)
+    string += 'insert tweet %s of user with id %d in table tweets\n' % (tweet_id, people_id)
     insert_tweet(cursor,tweet_id,people_id)
 
     # get all tweets
-    print 'get all tweets'
+    string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
 
     # delete tweet from table tweets by tweet id
-    print 'delete tweet by tweet id %s' % tweet_id
+    string += 'delete tweet by tweet id %s\n' % tweet_id
     delete_tweets(cursor,'tweet_id',tweet_id)
 
     # get all tweets
-    print 'get all tweets'
+    string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
 
     # define test tweet
     tweet_id = '908758168733405184'
     people_id = 4
 
     # insert tweet into table tweets
-    print 'insert tweet %s of user with id %d in table tweets' % (tweet_id, people_id)
+    string += 'insert tweet %s of user with id %d in table tweets\n' % (tweet_id, people_id)
     insert_tweet(cursor,tweet_id,people_id)
 
     # define test tweet
@@ -159,20 +179,34 @@ def main():
     people_id = 4
 
     # insert tweet into table tweets
-    print 'insert tweet %s of user with id %d in table tweets' % (tweet_id, people_id)
+    string += 'insert tweet %s of user with id %d in table tweets\n' % (tweet_id, people_id)
     insert_tweet(cursor,tweet_id,people_id)
 
     # get all tweets
-    print 'get all tweets'
+    string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
 
     # delete tweet from table tweets by people id
-    print 'delete tweets by user id %s' % people_id
+    string += 'delete tweets by user id %s\n' % people_id
     delete_tweets(cursor,'people_id',people_id)
 
     # get all tweets
-    print 'get all tweets'
+    string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
+
+    return string
+
+def main():
+
+    # start program and go to localhost:8051 in browser
+    httpd = make_server (
+        'localhost',
+        8051,
+        application 
+    )
+    httpd.handle_request()
 
 if __name__ == "__main__":
     main()
