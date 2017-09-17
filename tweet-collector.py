@@ -206,7 +206,8 @@ def main():
         8051,
         application 
     )
-    httpd.handle_request()
+    #httpd.handle_request()
+    httpd.serve_forever()
 
 if __name__ == "__main__":
     main()
