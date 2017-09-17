@@ -2,16 +2,11 @@
 
 from wsgiref.simple_server import make_server
 import sys, os
-# add current directory to module search path for apache
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
-import database
-#from database import test_mode
-
+import test_tweet_collector as test
 
 def application (environ,start_response):
-    response_body = database.test_mode()
-#    response_body = test_mode()
+    response_body = test.teststring()
     status = '200 OK'
     response_headers = [
         ('Content-Type', 'text/plain'),
