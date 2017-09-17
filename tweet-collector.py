@@ -66,9 +66,11 @@ def delete_tweets(cursor,key,value):
 
 def test_mode():
 
+    CONFIG = '/etc/tweet-collector.cfg'
+
     # get config
     config = ConfigParser.ConfigParser()
-    config.readfp(open('config.cfg'))
+    config.readfp(open(CONFIG))
 
     # connect to database
     mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
