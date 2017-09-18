@@ -8,11 +8,11 @@ from database import *
 
 def teststring():
 
-    CONFIG = '/etc/tweet-collector.cfg'
+    CONFIGFILE = '/etc/tweet-collector.cfg'
 
     # get config
     config = ConfigParser.ConfigParser()
-    config.readfp(open(CONFIG))
+    config.readfp(open(CONFIGFILE))
 
     # connect to database
     mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
@@ -61,6 +61,11 @@ def teststring():
     # get all users
     string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
+    string += print_user(cursor)
+
+    # get latest users
+    string += 'get latest users'+'\n'
+    cursor = get_latest_users(cursor)
     string += print_user(cursor)
 
     # --- TWEETS ---
@@ -138,6 +143,11 @@ def teststring():
     # get all tweets
     string += 'get all tweets'+'\n'
     cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
+
+    # get latest tweets
+    string += 'get latest tweets'+'\n'
+    cursor = get_latest_tweets(cursor)
     string += print_tweet(cursor)
 
     return string

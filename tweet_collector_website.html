@@ -31,10 +31,10 @@
       </tr>
     </thead>
     <tbody>
-      {% for d in user_list %}
+      {% for user_dict in user_list %}
       <tr>
-        <td>{{d["id"]}}</td>
-        <td>{{d["user"]}}</td>
+        <td>{{user_dict["id"]}}</td>
+        <td>{{user_dict["user"]}}</td>
         <td>Link</td>
       </tr>
       {% endfor %}
@@ -44,23 +44,21 @@
   <table class="table table-hover table-bordered table-responsive">
     <thead>
       <tr>
-        <th>Twitternick</th>
+        <th>Tweet ID</th>
+        <th>Tweet</th>
+        <th>User ID</th>
         <th>Link</th>
       </tr>
     </thead>
     <tbody>
+      {% for tweet_dict in tweet_list %}
       <tr>
-        <td>User1</td>
+        <td>{{tweet_dict["id"]}}</td>
+        <td>{{tweet_dict["tweet_id"]}}</td>
+        <td>{{tweet_dict["people_id"]}}</td>
         <td>Link</td>
       </tr>
-      <tr>
-        <td>User2</td>
-        <td>Link</td>
-      </tr>
-      <tr>
-        <td>User3</td>
-        <td>Link</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

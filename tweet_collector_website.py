@@ -28,8 +28,8 @@ def startpage():
     )
     template = env.get_template('tweet_collector_website.html')
 
-    user_list = []
     # get latest 3 users
+    user_list = []
     cursor = database.get_latest_users(cursor)
     count = 0
     for id, twitternick in cursor:
@@ -39,7 +39,18 @@ def startpage():
         dict = {'user': twitternick, 'id': id}
         user_list.append(dict)
 
-    return template.render(user_list=user_list)
+    # get latest 3 tweets
+    tweet_list = []
+    cursor = database.get_latest_tweets(cursor)
+    count = 0
+    for id, tweet_id, people_id in cursor:
+        count += 1
+        if count > 3:
+            break
+        dict = {'id': id, 'tweet_id': tweet_id, 'people_id': people_id}
+        tweet_list.append(dict)
+
+    return template.render(user_list=user_list, tweet_list=tweet_list)
 
 def main():
     print startpage()
