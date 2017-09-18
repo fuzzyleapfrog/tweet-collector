@@ -3,13 +3,22 @@
 import jinja2
 import os
 
-currentpath = os.path.dirname(__file__)
+def startpage():
 
-env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(currentpath),
-)
+    currentpath = os.path.dirname(__file__)
 
-template = env.get_template('website.html')
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(currentpath),
+    )
 
-print template.render(user1='User1', user2='User2')
+    template = env.get_template('website.html')
+
+    return template.render(user1='User1', user2='User2', user3='User3')
+
+def main():
+    print startpage()
+
+if __name__ == "__main__":
+    main()
+
 

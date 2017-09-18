@@ -4,12 +4,15 @@ from wsgiref.simple_server import make_server
 import sys, os
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import test_tweet_collector as test
+import website
 
 def application (environ,start_response):
-    response_body = test.teststring()
+#    response_body = test.teststring()
+    response_body = website.startpage().encode('utf-8')
     status = '200 OK'
     response_headers = [
-        ('Content-Type', 'text/plain'),
+#        ('Content-Type', 'text/plain'),
+        ('Content-Type', 'text/html'),
         ('Content-Length', str(len(response_body)))
     ]
     start_response(status, response_headers)
