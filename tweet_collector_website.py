@@ -11,9 +11,13 @@ def startpage():
         loader=jinja2.FileSystemLoader(currentpath),
     )
 
-    template = env.get_template('website.html')
+    template = env.get_template('tweet_collector_website.html')
 
-    return template.render(user1='User1', user2='User2', user3='User3')
+    list = [{'user1': 'User1'},
+            {'user2': 'User2'},
+            {'user3': 'User3'}]
+    
+    return template.render(l=list)
 
 def main():
     print startpage()

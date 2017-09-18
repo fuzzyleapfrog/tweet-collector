@@ -30,18 +30,14 @@
       </tr>
     </thead>
     <tbody>
+      {% for d in l %}
       <tr>
-        <td>{{user1}}</td>
+	{% for key in d %}
+        <td>{{d[key]}}</td>
         <td>Link</td>
+	{% endfor %}
       </tr>
-      <tr>
-        <td>{{user2}}</td>
-        <td>Link</td>
-      </tr>
-      <tr>
-        <td>{{user3}}</td>
-        <td>Link</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
   <h2>List of latest collected tweets</h2>
