@@ -28,6 +28,10 @@ def delete_user(cursor,key,value):
     cursor.execute(query)
     return cursor
 
+def get_latest_users(cursor):
+    cursor.execute("SELECT id, twitternick FROM people ORDER BY id DESC")
+    return cursor
+
 def print_tweet(cursor):
     string = ''
     for id, tweet_id, people_id in cursor:
@@ -51,6 +55,10 @@ def insert_tweet(cursor,tweet_id,people_id):
 def delete_tweets(cursor,key,value):
     query = "DELETE FROM tweets WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
+    return cursor
+
+def get_latest_tweets(cursor):
+    cursor.execute("SELECT id, tweet_id, people_id FROM tweets ORDER BY id DESC")
     return cursor
 
 

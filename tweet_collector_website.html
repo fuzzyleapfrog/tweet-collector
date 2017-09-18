@@ -25,17 +25,17 @@
   <table class="table table-hover table-bordered">
     <thead>
       <tr>
+	<th>User ID</th>
         <th>Twitternick</th>
         <th>Link</th>
       </tr>
     </thead>
     <tbody>
-      {% for d in l %}
+      {% for d in user_list %}
       <tr>
-	{% for key in d %}
-        <td>{{d[key]}}</td>
+        <td>{{d["id"]}}</td>
+        <td>{{d["user"]}}</td>
         <td>Link</td>
-	{% endfor %}
       </tr>
       {% endfor %}
     </tbody>
