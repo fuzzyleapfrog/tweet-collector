@@ -5,17 +5,17 @@ import mysql.connector as mariadb
 
 def print_user(cursor):
     string = ''
-    for id, twitternick in cursor:
+    for id, twitternick, submit in cursor:
         string += "ID: {}, Twitternick: {}".format(id,twitternick)+'\n'
     return string
 
 def get_user(cursor,key,value):
-    query = "SELECT id, twitternick FROM people WHERE {} = '{}'".format(key,value)
+    query = "SELECT id, twitternick, submit FROM people WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
     return cursor
 
 def get_all_users(cursor):
-    cursor.execute("SELECT id, twitternick FROM people")
+    cursor.execute("SELECT id, twitternick, submit FROM people")
     return cursor
 
 def insert_user(cursor,twitternick):
@@ -29,22 +29,22 @@ def delete_user(cursor,key,value):
     return cursor
 
 def get_latest_users(cursor):
-    cursor.execute("SELECT id, twitternick FROM people ORDER BY submit DESC")
+    cursor.execute("SELECT id, twitternick, submit FROM people ORDER BY submit DESC")
     return cursor
 
 def print_tweet(cursor):
     string = ''
-    for id, tweet_id, people_id in cursor:
+    for id, tweet_id, people_id, submit in cursor:
         string += "ID: {}, Tweet-ID: {}, User-ID: {}".format(id,tweet_id,people_id)+'\n'
     return string
 
 def get_tweet(cursor,key,value):
-    query = "SELECT id, tweet_id, people_id FROM tweets WHERE {} = '{}'".format(key,value)
+    query = "SELECT id, tweet_id, people_id, submit FROM tweets WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
     return cursor
     
 def get_all_tweets(cursor):
-    cursor.execute("SELECT id, tweet_id, people_id FROM tweets")
+    cursor.execute("SELECT id, tweet_id, people_id, submit FROM tweets")
     return cursor
 
 def insert_tweet(cursor,tweet_id,people_id):
@@ -58,7 +58,7 @@ def delete_tweets(cursor,key,value):
     return cursor
 
 def get_latest_tweets(cursor):
-    cursor.execute("SELECT id, tweet_id, people_id FROM tweets ORDER BY submit DESC")
+    cursor.execute("SELECT id, tweet_id, people_id, submit FROM tweets ORDER BY submit DESC")
     return cursor
 
 
