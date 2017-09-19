@@ -29,7 +29,7 @@ def delete_user(cursor,key,value):
     return cursor
 
 def get_latest_users(cursor):
-    cursor.execute("SELECT id, twitternick FROM people ORDER BY id DESC")
+    cursor.execute("SELECT id, twitternick FROM people ORDER BY submit DESC")
     return cursor
 
 def print_tweet(cursor):
@@ -58,7 +58,7 @@ def delete_tweets(cursor,key,value):
     return cursor
 
 def get_latest_tweets(cursor):
-    cursor.execute("SELECT id, tweet_id, people_id FROM tweets ORDER BY id DESC")
+    cursor.execute("SELECT id, tweet_id, people_id FROM tweets ORDER BY submit DESC")
     return cursor
 
 
