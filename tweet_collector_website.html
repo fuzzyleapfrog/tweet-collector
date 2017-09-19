@@ -45,7 +45,7 @@
     <thead>
       <tr>
         <th>Tweet</th>
-        <th>User ID</th>
+        <th>Twitternick</th>
 	<th>Submission Date</th>
         <th>Link</th>
       </tr>
@@ -54,7 +54,7 @@
       {% for tweet_dict in tweet_list %}
       <tr>
         <td>{{tweet_dict["tweet_id"]}}</td>
-        <td>{{tweet_dict["people_id"]}}</td>
+        <td>{{tweet_dict["twitternick"]}}</td>
         <td>{{tweet_dict["submit"]}}</td>
         <td>Link</td>
       </tr>

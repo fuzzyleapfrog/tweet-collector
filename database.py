@@ -38,6 +38,12 @@ def print_tweet(cursor):
         string += "ID: {}, Tweet-ID: {}, User-ID: {}".format(id,tweet_id,people_id)+'\n'
     return string
 
+def print_latest_tweets(cursor):
+    string = ''
+    for id, tweet_id, twitternick, submit in cursor:
+        string += "ID: {}, Tweet-ID: {}, Twitternick: {}".format(id,tweet_id,twitternick)+'\n'
+    return string
+
 def get_tweet(cursor,key,value):
     query = "SELECT id, tweet_id, people_id, submit FROM tweets WHERE {} = '{}'".format(key,value)
     cursor.execute(query)
@@ -58,7 +64,7 @@ def delete_tweets(cursor,key,value):
     return cursor
 
 def get_latest_tweets(cursor):
-    cursor.execute("SELECT id, tweet_id, people_id, submit FROM tweets ORDER BY submit DESC")
+    cursor.execute("SELECT tweets.id, tweets.tweet_id, people.twitternick, tweets.submit FROM tweets INNER JOIN people ON tweets.people_id = people.id ORDER BY tweets.submit DESC")
     return cursor
 
 

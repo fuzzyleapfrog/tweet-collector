@@ -148,7 +148,7 @@ def teststring():
     # get latest tweets
     string += 'get latest tweets'+'\n'
     cursor = get_latest_tweets(cursor)
-    string += print_tweet(cursor)
+    string += print_latest_tweets(cursor)
 
     return string
 

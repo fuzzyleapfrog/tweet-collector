@@ -43,11 +43,11 @@ def startpage():
     tweet_list = []
     cursor = database.get_latest_tweets(cursor)
     count = 0
-    for id, tweet_id, people_id, submit in cursor:
+    for id, tweet_id, twitternick, submit in cursor:
         count += 1
         if count > 3:
             break
-        dict = {'id': id, 'tweet_id': tweet_id, 'people_id': people_id, 'submit': str(submit)}
+        dict = {'id': id, 'tweet_id': tweet_id, 'twitternick': twitternick, 'submit': str(submit)}
         tweet_list.append(dict)
 
     return template.render(user_list=user_list, tweet_list=tweet_list)
