@@ -33,10 +33,14 @@ def startpage():
     cursor = database.get_latest_users(cursor)
     count = 0
     for id, twitternick, submit in cursor:
+        link = 'https://twitter.com/'+twitternick
         count += 1
         if count > 3:
             break
-        dict = {'user': twitternick, 'id': id, 'submit': str(submit)}
+        dict = {'user': twitternick,
+                'id': id,
+                'submit': str(submit),
+                'link': link}
         user_list.append(dict)
 
     # get latest 3 tweets
@@ -44,10 +48,17 @@ def startpage():
     cursor = database.get_latest_tweets(cursor)
     count = 0
     for id, tweet_id, twitternick, submit in cursor:
+        link = 'https://twitter.com/'+twitternick+'/status/'+tweet_id
+        profile = 'https://twitter.com/'+twitternick
         count += 1
         if count > 3:
             break
-        dict = {'id': id, 'tweet_id': tweet_id, 'twitternick': twitternick, 'submit': str(submit)}
+        dict = {'id': id,
+                'tweet_id': tweet_id,
+                'twitternick': twitternick,
+                'profile': profile,
+                'submit': str(submit),
+                'link': link}
         tweet_list.append(dict)
 
     return template.render(user_list=user_list, tweet_list=tweet_list)

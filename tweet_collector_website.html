@@ -35,7 +35,7 @@
       <tr>
         <td>{{user_dict["user"]}}</td>
         <td>{{user_dict["submit"]}}</td>
-        <td>Link</td>
+        <td><a href="{{user_dict["link"]}}">Profile</a></td>
       </tr>
       {% endfor %}
     </tbody>
@@ -54,9 +54,9 @@
       {% for tweet_dict in tweet_list %}
       <tr>
         <td>{{tweet_dict["tweet_id"]}}</td>
-        <td>{{tweet_dict["twitternick"]}}</td>
+        <td><a href="{{tweet_dict["profile"]}}">{{tweet_dict["twitternick"]}}</a></td>
         <td>{{tweet_dict["submit"]}}</td>
-        <td>Link</td>
+        <td><a href="{{tweet_dict["link"]}}">Tweet</a></td>
       </tr>
       {% endfor %}
     </tbody>
