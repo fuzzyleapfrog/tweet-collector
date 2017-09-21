@@ -2,11 +2,17 @@
 
 from wsgiref.simple_server import make_server
 import sys, os
+from cgi import parse_qs
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import tweet_collector_website as website
+import database
 
 def application (environ,start_response):
-    response_body = website.startpage().encode('utf-8')
+    query = parse_qs(environ['QUERY_STRING'])
+    url = ""
+    if "url" in query:
+        url = query["url"][0] # assume one url as input
+    response_body = website.startpage(url).encode('utf-8')
     status = '200 OK'
     response_headers = [
         ('Content-Type', 'text/html'),

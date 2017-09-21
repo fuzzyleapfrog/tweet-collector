@@ -7,7 +7,7 @@ import os, sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import database
 
-def startpage():
+def startpage(url):
 
     CONFIGFILE = '/etc/tweet-collector.cfg'
 
@@ -29,7 +29,7 @@ def startpage():
     template = env.get_template('tweet_collector_website.html')
 
     # get latest 3 users
-    user_list = []
+    user = []
     cursor = database.get_latest_users(cursor)
     count = 0
     for id, twitternick, submit in cursor:
@@ -41,10 +41,10 @@ def startpage():
                 'id': id,
                 'submit': str(submit),
                 'link': link}
-        user_list.append(dict)
+        user.append(dict)
 
     # get latest 3 tweets
-    tweet_list = []
+    tweet = []
     cursor = database.get_latest_tweets(cursor)
     count = 0
     for id, tweet_id, twitternick, submit in cursor:
@@ -59,9 +59,15 @@ def startpage():
                 'profile': profile,
                 'submit': str(submit),
                 'link': link}
-        tweet_list.append(dict)
+        tweet.append(dict)
 
-    return template.render(user_list=user_list, tweet_list=tweet_list)
+    collect = []
+    if url != "":
+        dict = {'url': url,
+                'text': 'The following tweet has been collected: '}
+        collect.append(dict)
+
+    return template.render(user=user, tweet=tweet, collect=collect)
 
 def main():
     print startpage()
