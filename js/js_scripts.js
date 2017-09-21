@@ -20,8 +20,10 @@ function myFunction() {
         document.getElementById("response").className = "bg-danger";
     } else {
         document.getElementById("space").innerHTML = "";
-        text = "Tweet has been collected!";
+        text = "This link can be collected!";
         // TODO: Collect tweet
+	// TODO: Return whether it really has been collected
+	// TODO: Check if given link really resolves
 	// TODO: Check whether it allready exists in the database
         document.getElementById("response").innerHTML = text;
         document.getElementById("response").className = "bg-success";

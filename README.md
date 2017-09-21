@@ -7,5 +7,6 @@ You first have to create your own `tweet-collector.cfg` based on the example con
 # Framework
 - Uses Apache2 and WSGI. Example for Apache2 configuration in `tweet-collector.conf`. Modify and move to Apache `sites-available` directory and create symlink in Apache `sites-enabled`.
 - Uses jinja2 for creating HTML.
+- Uses Javascript. Set link to Javascripts of Tweet Collector located in folder `tweet-collector/js` in your Apache2 configuration to variable `DocumentRoot`. 
 
 
