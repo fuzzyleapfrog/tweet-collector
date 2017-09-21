@@ -22,7 +22,6 @@ function myFunction() {
     } else {
         document.getElementById("space").innerHTML = "";
         text = "This link can be collected!";
-        // TODO: Collect tweet
 	// TODO: Return whether it really has been collected
 	// TODO: Check if given link really resolves
 	// TODO: Check whether it allready exists in the database

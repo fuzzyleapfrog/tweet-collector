@@ -12,6 +12,10 @@ def application (environ,start_response):
     url = ""
     if "url" in query:
         url = query["url"][0] # assume one url as input
+    # TODO: call database to check if the user of the tweet is already in the database and,
+    #       if not, to insert the user. Check also whether the tweet is already in the
+    #       database and, if not, insert the tweet into the database.
+    # TODO: Reload list of recently entered users/tweets.
     response_body = website.startpage(url).encode('utf-8')
     status = '200 OK'
     response_headers = [
