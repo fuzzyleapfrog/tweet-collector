@@ -16,13 +16,14 @@ function myFunction() {
     if (!ValidURL(url)) {
         document.getElementById("space").innerHTML = "";
         text = "This is not a link to a tweet!";
-        document.getElementById("response negative").innerHTML = text;
+        document.getElementById("response").innerHTML = text;
+        document.getElementById("response").className = "bg-danger";
     } else {
         document.getElementById("space").innerHTML = "";
         text = "Tweet has been collected!";
         // TODO: Collect tweet
 	// TODO: Check whether it allready exists in the database
-	// TODO: Replace background colour of the text depending an ValidURL
-        document.getElementById("response positive").innerHTML = text;
+        document.getElementById("response").innerHTML = text;
+        document.getElementById("response").className = "bg-success";
     }
 }
