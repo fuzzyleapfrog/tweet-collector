@@ -18,6 +18,7 @@ function myFunction() {
         text = "This is not a link to a tweet!";
         document.getElementById("response").innerHTML = text;
         document.getElementById("response").className = "bg-danger";
+        document.getElementById("submit").disabled = true;
     } else {
         document.getElementById("space").innerHTML = "";
         text = "This link can be collected!";
@@ -27,5 +28,6 @@ function myFunction() {
 	// TODO: Check whether it allready exists in the database
         document.getElementById("response").innerHTML = text;
         document.getElementById("response").className = "bg-success";
+        document.getElementById("submit").disabled = false;
     }
 }
