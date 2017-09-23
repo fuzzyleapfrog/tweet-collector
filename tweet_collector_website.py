@@ -16,6 +16,13 @@ def startpage(cursor,url):
     )
     template = env.get_template('tweet_collector_website.html')
 
+    # collect tweet via url
+    collect = []
+    if url != "":
+        dict = {'url': url,
+                'text': 'The following tweet has been collected: '}
+        collect.append(dict)
+
     # get latest 3 users
     user = []
     cursor = database.get_latest_users(cursor)
@@ -49,13 +56,7 @@ def startpage(cursor,url):
                 'link': link}
         tweet.append(dict)
 
-    collect = []
-    if url != "":
-        dict = {'url': url,
-                'text': 'The following tweet has been collected: '}
-        collect.append(dict)
-
-    return template.render(user=user, tweet=tweet, collect=collect)
+    return template.render(collect=collect, user=user, tweet=tweet)
 
 def main():
     print startpage()
