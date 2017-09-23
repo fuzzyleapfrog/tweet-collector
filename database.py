@@ -80,14 +80,4 @@ def get_latest_tweets(cursor):
     cursor.execute("SELECT tweets.id, tweets.tweet_id, people.twitternick, tweets.submit FROM tweets INNER JOIN people ON tweets.people_id = people.id ORDER BY tweets.submit DESC")
     return cursor
 
-def check_url(url):
-    dict = {}
-    tweet = url.replace('https://twitter.com/','').replace('http://twitter.com/','').replace('status/','')
-    if len(tweet.split('/')) == 2:
-        twitternick = tweet.split('/')[0]
-        tweet_id = tweet.split('/')[1]
-        dict = {'twitternick': twitternick,
-                'tweet_id': tweet_id}
-    return dict
-
     
