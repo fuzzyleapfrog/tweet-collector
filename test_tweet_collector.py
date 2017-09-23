@@ -172,8 +172,12 @@ def teststring():
     # define already existing user and tweet
     url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
 
-    # check whether user is already in database
+    # check whether user is already in database, if not, insert
     string += 'url with user already in database'+'\n'
+    # TODO
+    
+    # check whether tweet is already in database, if not, insert
+    string += 'url with tweet already in database'+'\n'
     # TODO
     
 #   ---
@@ -181,14 +185,14 @@ def teststring():
     # define not already existing tweet but user
     url = 'https://twitter.com/FuzzyLeapfrog/status/911338177323048960'
 
-    # check whether user is already in database
+    # check whether user is already in database, if not, insert
     string += 'url with user already in database'+'\n'
     # TODO
 
-    # get all users
-    string += 'get all users'+'\n'
-#    cursor = get_all_users(cursor)
-#    string += print_user(cursor)
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
 
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet not already in database'+'\n'
@@ -213,6 +217,11 @@ def teststring():
     # define not already existing user and tweet
     url = 'https://twitter.com/BMittermaier/status/911289262783557633'
 
+    # get all users
+    string += 'get all users'+'\n'
+#    cursor = get_all_users(cursor)
+#    string += print_user(cursor)
+
     # check whether user is already in database, if not, insert
     string += 'url with user not already in database'+'\n'
     # TODO
@@ -230,6 +239,11 @@ def teststring():
     string += 'get all users'+'\n'
 #    cursor = get_all_users(cursor)
 #    string += print_user(cursor)
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
 
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet not already in database'+'\n'
