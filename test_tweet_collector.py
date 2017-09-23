@@ -147,7 +147,7 @@ def teststring():
 
     # check url
     string += 'check broken url'+'\n'
-    dict = check_url(cursor,url)
+    dict = check_url(url)
     if 'twitternick' in dict:
         for key in dict:
             string += key+': '+dict[key]+'\n'
@@ -159,7 +159,7 @@ def teststring():
 
     # check url
     string += 'check valid url'+'\n'
-    dict = check_url(cursor,url)
+    dict = check_url(url)
     if 'twitternick' in dict:
         for key in dict:
             string += key+': '+dict[key]+'\n'
