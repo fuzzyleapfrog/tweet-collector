@@ -4,6 +4,7 @@ import ConfigParser
 import mysql.connector as mariadb
 
 def connect_to_db():
+    # connect to database
     CONFIGFILE = '/etc/tweet-collector.cfg'
     # get config
     config = ConfigParser.ConfigParser()
@@ -13,7 +14,7 @@ def connect_to_db():
                                          password=config.get('Database','PW'),
                                          database=config.get('Database','NAME'))
     cursor = mariadb_connection.cursor()
-    return cursor
+    return mariadb_connection, cursor
 
 def print_user(cursor):
     string = ''
@@ -79,12 +80,14 @@ def get_latest_tweets(cursor):
     cursor.execute("SELECT tweets.id, tweets.tweet_id, people.twitternick, tweets.submit FROM tweets INNER JOIN people ON tweets.people_id = people.id ORDER BY tweets.submit DESC")
     return cursor
 
-def check_tweet_for_people(url):
+def check_url(cursor,url):
+    dict = {}
     tweet = url.replace('https://twitter.com/','').replace('http://twitter.com/','').replace('status/','')
-    twitternick = tweet.split('/')[0]
-    tweet_id = tweet.split('/')[1]
-    string = url+', '+twitternick+', '+tweet_id+'\n'
-#    query = "SELECT id, twitternick, submit FROM people WHERE {} = '{}'".format('twitternick',twitternick)
-#    cursor.execute(query)
-#    return cursor
-    return string
+    if len(tweet.split('/')) == 2:
+        twitternick = tweet.split('/')[0]
+        tweet_id = tweet.split('/')[1]
+        dict = {'twitternick': twitternick,
+                'tweet_id': tweet_id}
+    return dict
+
+    

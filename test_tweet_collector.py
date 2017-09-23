@@ -8,15 +8,7 @@ from database import *
 
 def teststring():
 
-    CONFIGFILE = '/etc/tweet-collector.cfg'
-    # get config
-    config = ConfigParser.ConfigParser()
-    config.readfp(open(CONFIGFILE))
-    # connect to database
-    mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
-                                         password=config.get('Database','PW'),
-                                         database=config.get('Database','NAME'))
-    cursor = mariadb_connection.cursor()
+    connection, cursor = connect_to_db()
 
     string = ''
 
@@ -150,14 +142,111 @@ def teststring():
 
     # ---- URL ----
     
-    # define already existing tweet
+    # define broken url
+    url = 'https://www.twitter.com/FuzzyLeapfrog/status/877880899764977664'
+
+    # check url
+    string += 'check broken url'+'\n'
+    dict = check_url(cursor,url)
+    if 'twitternick' in dict:
+        for key in dict:
+            string += key+': '+dict[key]+'\n'
+    else:
+        string += 'Extracting twitternick and tweet_id failed.'+'\n'
+
+    # define valid url
+    url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
+
+    # check url
+    string += 'check valid url'+'\n'
+    dict = check_url(cursor,url)
+    if 'twitternick' in dict:
+        for key in dict:
+            string += key+': '+dict[key]+'\n'
+    else:
+        string += 'Extracting twitternick and tweet_id failed.'+'\n'
+
+#   ---
+
+    # define already existing user and tweet
     url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
 
     # check whether user is already in database
     string += 'url with user already in database'+'\n'
-    cursor = check_tweet_for_people(url)
-    string += cursor
+    # TODO
+    
+#   ---
+
+    # define not already existing tweet but user
+    url = 'https://twitter.com/FuzzyLeapfrog/status/911338177323048960'
+
+    # check whether user is already in database
+    string += 'url with user already in database'+'\n'
+    # TODO
+
+    # get all users
+    string += 'get all users'+'\n'
+#    cursor = get_all_users(cursor)
 #    string += print_user(cursor)
+
+    # check whether tweet is already in database, if not, insert
+    string += 'url with tweet not already in database'+'\n'
+#   TODO
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
+
+    # delete tweet from table tweets by tweet id
+    string += 'delete tweet by tweet id 911338177323048960\n'
+#    delete_tweets(cursor,'tweet_id','911338177323048960')
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
+
+#   ---
+
+    # define not already existing user and tweet
+    url = 'https://twitter.com/BMittermaier/status/911289262783557633'
+
+    # check whether user is already in database, if not, insert
+    string += 'url with user not already in database'+'\n'
+    # TODO
+    
+    # get all users
+    string += 'get all users'+'\n'
+#    cursor = get_all_users(cursor)
+#    string += print_user(cursor)
+
+    # delete user from table people
+    string += 'delete user BMittermaier\n'
+#    delete_user(cursor,'twitternick','BMittermaier')
+
+    # get all users
+    string += 'get all users'+'\n'
+#    cursor = get_all_users(cursor)
+#    string += print_user(cursor)
+
+    # check whether tweet is already in database, if not, insert
+    string += 'url with tweet not already in database'+'\n'
+#    TODO
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
+
+    # delete tweet from table tweets by tweet id
+    string += 'delete tweet by tweet id 911289262783557633\n'
+#    delete_tweets(cursor,'tweet_id',tweet_id)
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+#    cursor = get_all_tweets(cursor)
+#    string += print_tweet(cursor)
 
     return string
 

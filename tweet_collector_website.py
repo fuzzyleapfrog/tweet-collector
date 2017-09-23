@@ -7,19 +7,7 @@ import os, sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import database
 
-def startpage(url):
-
-    CONFIGFILE = '/etc/tweet-collector.cfg'
-
-    # get config
-    config = ConfigParser.ConfigParser()
-    config.readfp(open(CONFIGFILE))
-
-    # connect to database
-    mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
-                                         password=config.get('Database','PW'),
-                                         database=config.get('Database','NAME'))
-    cursor = mariadb_connection.cursor()
+def startpage(cursor,url):
 
     # get template
     currentpath = os.path.dirname(__file__)

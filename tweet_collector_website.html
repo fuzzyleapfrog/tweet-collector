@@ -22,12 +22,16 @@
   <h2>Collect a tweet</h2>
 
   <form method="get" action="" class="form-group">
-    <label for="url">Please enter the link to tweet you want to collect</label>
+    <label for="url">Please enter the link to the tweet you want to collect</label>
     <input type="url" class="form-control" oninput="myFunction()" name="url" id="url">
     <p id="space"></p>
+    {% if collect %}
     {% for collect_dict in collect %}
     <p id="response">{{collect_dict["text"]}}<a href="{{collect_dict["url"]}}">Tweet</a></p>
     {% endfor %}
+    {% else %}
+    <p id="response"></p>
+    {% endif %}
     <input type="submit" value="Collect" id="submit" disabled="true">
   </form>
 
