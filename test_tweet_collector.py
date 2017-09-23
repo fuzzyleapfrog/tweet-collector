@@ -9,11 +9,9 @@ from database import *
 def teststring():
 
     CONFIGFILE = '/etc/tweet-collector.cfg'
-
     # get config
     config = ConfigParser.ConfigParser()
     config.readfp(open(CONFIGFILE))
-
     # connect to database
     mariadb_connection = mariadb.connect(user=config.get('Database','USER'),
                                          password=config.get('Database','PW'),
@@ -149,6 +147,17 @@ def teststring():
     string += 'get latest tweets'+'\n'
     cursor = get_latest_tweets(cursor)
     string += print_latest_tweets(cursor)
+
+    # ---- URL ----
+    
+    # define already existing tweet
+    url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
+
+    # check whether user is already in database
+    string += 'url with user already in database'+'\n'
+    cursor = check_tweet_for_people(url)
+    string += cursor
+#    string += print_user(cursor)
 
     return string
 
