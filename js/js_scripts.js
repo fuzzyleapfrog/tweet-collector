@@ -1,7 +1,7 @@
 function ValidURL(url) {
-    if((url.search("http://twitter.com/") == 0
-     || url.search("https://twitter.com/") == 0)
-     && url.search("/status/") != -1) {
+    if ((url.search("http://twitter.com/") == 0
+        || url.search("https://twitter.com/") == 0)
+	&& url.search("/status/") != -1) {
         return true;
     } else {
         return false;
@@ -21,7 +21,7 @@ function myFunction() {
         document.getElementById("submit").disabled = true;
     } else {
         document.getElementById("space").innerHTML = "";
-        text = "This link can be collected!";
+        text = "This looks like a link to a tweet!";
 	// TODO: Return whether it really has been collected
 	// TODO: Check if given link really resolves
 	// TODO: Check whether it allready exists in the database

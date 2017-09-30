@@ -147,25 +147,34 @@ def teststring():
     url = 'https://www.twitter.com/FuzzyLeapfrog/status/877880899764977664'
 
     # check url
-    string += 'check broken url'+'\n'
+    string += 'check broken url: '+url+'\n'
     dict = check_url(url)
-    if 'twitternick' in dict:
-        for key in dict:
-            string += key+': '+dict[key]+'\n'
-    else:
-        string += 'Extracting twitternick and tweet_id failed.'+'\n'
+    for key in dict:
+        string += key+': '+str(dict[key])+'\n'
+    if dict['error']:
+        string += 'This is not a correct URL.'+'\n'
+
+    # define broken url
+    url = 'https://twitter.com/FuzzyLeapfrog/status/87788089977664'
+
+    # check url
+    string += 'check broken url: '+url+'\n'
+    dict = check_url(url)
+    for key in dict:
+        string += key+': '+str(dict[key])+'\n'
+    if dict['error']:
+        string += 'This is not a correct URL.'+'\n'
 
     # define valid url
     url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
 
     # check url
-    string += 'check valid url'+'\n'
+    string += 'check valid url: '+url+'\n'
     dict = check_url(url)
-    if 'twitternick' in dict:
-        for key in dict:
-            string += key+': '+dict[key]+'\n'
-    else:
-        string += 'Extracting twitternick and tweet_id failed.'+'\n'
+    for key in dict:
+        string += key+': '+str(dict[key])+'\n'
+    if dict['error']:
+        string += 'This is not a correct URL.'+'\n'
 
 #   ---
 
