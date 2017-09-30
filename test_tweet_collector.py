@@ -188,9 +188,10 @@ def teststring():
     url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
 
     # check whether user is already in database, if not, insert
-    string += 'url with user already in database'+'\n'
+    string += 'url with user and tweet already in database'+'\n'
     dict = check_url(url)
     if not dict['error']:
+        # check whether user is already in database, if not, insert
         cursor = get_user(cursor,'twitternick',dict['twitternick'])
         result = print_user(cursor)
         if result == "":
@@ -200,25 +201,38 @@ def teststring():
         else:
             string += 'user '+dict['twitternick']+' already in database'+'\n'
         string += print_user(cursor)
+        # check whether tweet is already in database, if not, insert
+        cursor = get_tweet(cursor,'tweet_id',dict['tweet_id'])
+        result = print_tweet(cursor)
+        if result == "":
+            string += 'tweet '+dict['tweet_id']+' not already in database'+'\n'
+            string += 'insert tweet '+dict['tweet_id']+'\n'
+            cursor = get_user(cursor,'twitternick',dict['twitternick'])            
+            for id, nick, submit in cursor:
+                insert_tweet(cursor,dict['tweet_id'],id)
+        else:
+            string += 'tweet '+dict['tweet_id']+' already in database'+'\n'
+        string += print_tweet(cursor)
     
-    # check whether tweet is already in database, if not, insert
-    string += 'url with tweet already in database'+'\n'
-    # TODO
-    
+#   ---
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+    cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
+
     # get all users
     string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
     string += print_user(cursor)
-
-#   ---
 
     # define not already existing user and tweet
     url = 'https://twitter.com/BMittermaier/status/911289262783557633'
 
-    # check whether user is already in database, if not, insert
-    string += 'url with user not already in database'+'\n'
+    string += 'url with user and tweet not already in database'+'\n'
     dict = check_url(url)
     if not dict['error']:
+        # check whether user is already in database, if not, insert
         cursor = get_user(cursor,'twitternick',dict['twitternick'])
         result = print_user(cursor)
         if result == "":
@@ -228,19 +242,41 @@ def teststring():
         else:
             string += 'user '+dict['twitternick']+' already in database'+'\n'
         string += print_user(cursor)
+        # check whether tweet is already in database, if not, insert
+        cursor = get_tweet(cursor,'tweet_id',dict['tweet_id'])
+        result = print_tweet(cursor)
+        if result == "":
+            string += 'tweet '+dict['tweet_id']+' not already in database'+'\n'
+            string += 'insert tweet '+dict['tweet_id']+'\n'
+            cursor = get_user(cursor,'twitternick',dict['twitternick'])            
+            for id, nick, submit in cursor:
+                insert_tweet(cursor,dict['tweet_id'],id)
+        else:
+            string += 'tweet '+dict['tweet_id']+' already in database'+'\n'
+        string += print_tweet(cursor)
     
-    # check whether tweet is already in database, if not, insert
-    string += 'url with tweet already in database'+'\n'
-    # TODO
-    
+    # get all tweets
+    string += 'get all tweets'+'\n'
+    cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
+
     # get all users
     string += 'get all users'+'\n'
     cursor = get_all_users(cursor)
     string += print_user(cursor)
 
+    # delete tweet from table tweets by tweet id
+    string += 'delete tweet by tweet id %s\n' % dict['tweet_id']
+    delete_tweets(cursor,'tweet_id',dict['tweet_id'])
+
     # delete user from table people
     string += 'delete user %s\n' % dict['twitternick']
     delete_user(cursor,'twitternick',dict['twitternick'])
+
+    # get all tweets
+    string += 'get all tweets'+'\n'
+    cursor = get_all_tweets(cursor)
+    string += print_tweet(cursor)
 
     # get all users
     string += 'get all users'+'\n'
