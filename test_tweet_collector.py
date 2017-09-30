@@ -149,10 +149,12 @@ def teststring():
     # check url
     string += 'check broken url: '+url+'\n'
     dict = check_url(url)
-    for key in dict:
-        string += key+': '+str(dict[key])+'\n'
+#    for key in dict:
+#        string += key+': '+str(dict[key])+'\n'
     if dict['error']:
         string += 'This is not a correct URL.'+'\n'
+    else:
+        string += 'This is a correct URL.'+'\n'
 
     # define broken url
     url = 'https://twitter.com/FuzzyLeapfrog/status/87788089977664'
@@ -160,10 +162,12 @@ def teststring():
     # check url
     string += 'check broken url: '+url+'\n'
     dict = check_url(url)
-    for key in dict:
-        string += key+': '+str(dict[key])+'\n'
+#    for key in dict:
+#        string += key+': '+str(dict[key])+'\n'
     if dict['error']:
         string += 'This is not a correct URL.'+'\n'
+    else:
+        string += 'This is a correct URL.'+'\n'
 
     # define valid url
     url = 'https://twitter.com/FuzzyLeapfrog/status/877880899764977664'
@@ -171,10 +175,12 @@ def teststring():
     # check url
     string += 'check valid url: '+url+'\n'
     dict = check_url(url)
-    for key in dict:
-        string += key+': '+str(dict[key])+'\n'
+#    for key in dict:
+#        string += key+': '+str(dict[key])+'\n'
     if dict['error']:
         string += 'This is not a correct URL.'+'\n'
+    else:
+        string += 'This is a correct URL.'+'\n'
 
 #   ---
 
@@ -189,15 +195,21 @@ def teststring():
         result = print_user(cursor)
         if result == "":
             string += 'user '+dict['twitternick']+' not already in database'+'\n'
-            # TODO: Insert user into database
+            string += 'insert user '+dict['twitternick']+'\n'
+            insert_user(cursor,dict['twitternick'])
         else:
-            string += 'user already in database'+'\n'
+            string += 'user '+dict['twitternick']+' already in database'+'\n'
         string += print_user(cursor)
     
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet already in database'+'\n'
     # TODO
     
+    # get all users
+    string += 'get all users'+'\n'
+    cursor = get_all_users(cursor)
+    string += print_user(cursor)
+
 #   ---
 
     # define not already existing user and tweet
@@ -211,15 +223,30 @@ def teststring():
         result = print_user(cursor)
         if result == "":
             string += 'user '+dict['twitternick']+' not already in database'+'\n'
-            # TODO: Insert user into database
+            string += 'insert user '+dict['twitternick']+'\n'
+            insert_user(cursor,dict['twitternick'])
         else:
-            string += 'user already in database'+'\n'
+            string += 'user '+dict['twitternick']+' already in database'+'\n'
         string += print_user(cursor)
     
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet already in database'+'\n'
     # TODO
     
+    # get all users
+    string += 'get all users'+'\n'
+    cursor = get_all_users(cursor)
+    string += print_user(cursor)
+
+    # delete user from table people
+    string += 'delete user %s\n' % dict['twitternick']
+    delete_user(cursor,'twitternick',dict['twitternick'])
+
+    # get all users
+    string += 'get all users'+'\n'
+    cursor = get_all_users(cursor)
+    string += print_user(cursor)
+
 #   ---
 
     # define not already existing tweet but user
@@ -236,7 +263,7 @@ def teststring():
 
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet not already in database'+'\n'
-#   TODO
+    # TODO
 
     # get all tweets
     string += 'get all tweets'+'\n'
