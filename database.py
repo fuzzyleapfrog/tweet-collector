@@ -80,4 +80,5 @@ def get_latest_tweets(cursor):
     cursor.execute("SELECT tweets.id, tweets.tweet_id, people.twitternick, tweets.submit FROM tweets INNER JOIN people ON tweets.people_id = people.id ORDER BY tweets.submit DESC")
     return cursor
 
+
     

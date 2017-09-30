@@ -183,7 +183,38 @@ def teststring():
 
     # check whether user is already in database, if not, insert
     string += 'url with user already in database'+'\n'
+    dict = check_url(url)
+    if not dict['error']:
+        cursor = get_user(cursor,'twitternick',dict['twitternick'])
+        result = print_user(cursor)
+        if result == "":
+            string += 'user '+dict['twitternick']+' not already in database'+'\n'
+            # TODO: Insert user into database
+        else:
+            string += 'user already in database'+'\n'
+        string += print_user(cursor)
+    
+    # check whether tweet is already in database, if not, insert
+    string += 'url with tweet already in database'+'\n'
     # TODO
+    
+#   ---
+
+    # define not already existing user and tweet
+    url = 'https://twitter.com/BMittermaier/status/911289262783557633'
+
+    # check whether user is already in database, if not, insert
+    string += 'url with user not already in database'+'\n'
+    dict = check_url(url)
+    if not dict['error']:
+        cursor = get_user(cursor,'twitternick',dict['twitternick'])
+        result = print_user(cursor)
+        if result == "":
+            string += 'user '+dict['twitternick']+' not already in database'+'\n'
+            # TODO: Insert user into database
+        else:
+            string += 'user already in database'+'\n'
+        string += print_user(cursor)
     
     # check whether tweet is already in database, if not, insert
     string += 'url with tweet already in database'+'\n'
